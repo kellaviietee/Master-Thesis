@@ -1,0 +1,38 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Tutorials/water_bomb_tutorial.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Tutorials/pulling_tutorial.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Tutorials/punching_tutorial.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Tutorials/pushing_tutorial.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Tutorials/teleport_tutorial.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Tutorials/bomb_tutorials.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/Attack_tutorials.gd" type="Script" id=13]
+
+[node name="Attack_tutorials" type="Node2D"]
+position = Vector2( -90, 0 )
+scale = Vector2( 0.9, 0.9 )
+script = ExtResource( 13 )
+
+[node name="pulling_tutorial" parent="." instance=ExtResource( 2 )]
+visible = false
+position = Vector2( -1100, 270 )
+
+[node name="teleport_tutorial" parent="." instance=ExtResource( 5 )]
+visible = false
+position = Vector2( -1100, 270 )
+
+[node name="bomb_tutorials" parent="." instance=ExtResource( 6 )]
+visible = false
+position = Vector2( -1100, 270 )
+
+[node name="water_bomb_tutorial" parent="." instance=ExtResource( 1 )]
+visible = false
+position = Vector2( -1100, 270 )
+
+[node name="pushing_tutorial" parent="." instance=ExtResource( 4 )]
+visible = false
+position = Vector2( -1100, 270 )
+
+[node name="punching_tutorial" parent="." instance=ExtResource( 3 )]
+visible = false
+position = Vector2( -1100, 270 )

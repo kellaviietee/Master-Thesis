@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scripts/Global_health.gd" type="Script" id=1]
+[ext_resource path="res://UI/global_life.png" type="Texture" id=2]
+[ext_resource path="res://Scripts/Building_Health.gd" type="Script" id=5]
+
+
+[node name="BuildingHealth" type="Node2D"]
+script = ExtResource( 5 )
+
+[node name="Global_health" type="TextureProgress" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+max_value = 7.0
+value = 3.0
+texture_progress = ExtResource( 2 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="health_changed" from="." to="Global_health" method="_on_BuildingHealth_health_changed"]

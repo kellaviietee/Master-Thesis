@@ -1,0 +1,20 @@
+﻿keys,en,et
+END,End Turn,Lõpeta käik
+ATTACK,Attack,Ründa
+P_DIA1,Who are you?,Kes sa oled?
+V_DIA1,I'm a virus,Ma olen viirus! 
+P_DIA2,What do you do?,Mida sa teed?
+V_DIA2,I'll make you sick!,Ma teen su haigeks!
+P_DIA3,I won't let you!,Ma ei luba!
+V_DIA3,Try to stop me!,Proovi mind peatada!
+START,New Game,Uus mäng
+QUIT,Exit Game,Lahku
+INFO,About,Info
+SCAL_TUT,dot product,Skalaar-  \n korrutis
+VEC_TUT,How to find \n a vector,Vektori \n leidmine
+POS_TUT,Positional \n vector,Kohavektor
+LEN_TUT,Vector \n length,Vektori \n pikkus
+ADD_TUT,Vector \n addition,Vektorite \n liitmine
+SUB_TUT,Vector \n subtraction,Vektorite \n lahutamine
+ROUND_COUNT,Round ends in \n %s turns,Raundi lõpuni on \n %s käiku
+BILL1,Choose spawning \n locations,Määra oma \n asukohad

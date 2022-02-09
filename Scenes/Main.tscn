@@ -1,0 +1,235 @@
+[gd_scene load_steps=30 format=2]
+
+[ext_resource path="res://Scenes/Floor.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Houses.tscn" type="PackedScene" id=2]
+[ext_resource path="res://background floor.png" type="Texture" id=3]
+[ext_resource path="res://Scenes/Abilities.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scripts/Main.gd" type="Script" id=5]
+[ext_resource path="res://Scenes/Building_Health.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Floortiles/floor.png" type="Texture" id=7]
+[ext_resource path="res://Resources/map_info.tres" type="Resource" id=8]
+[ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scenes/ranged_enemy.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Lemons Can Fly.ttf" type="DynamicFontData" id=11]
+[ext_resource path="res://UI/attack.png" type="Texture" id=12]
+[ext_resource path="res://UI/end_turn.png" type="Texture" id=13]
+[ext_resource path="res://Scripts/Turn_counter.gd" type="Script" id=14]
+[ext_resource path="res://Turncounter.png" type="Texture" id=15]
+[ext_resource path="res://Scenes/bomb.tscn" type="PackedScene" id=16]
+[ext_resource path="res://Scenes/melee_enemy.tscn" type="PackedScene" id=17]
+[ext_resource path="res://Scenes/ranged_projectile.tscn" type="PackedScene" id=18]
+[ext_resource path="res://Scenes/pulling_rod.tscn" type="PackedScene" id=19]
+[ext_resource path="res://Scenes/pushing_rod.tscn" type="PackedScene" id=20]
+[ext_resource path="res://Scenes/water_bomb.tscn" type="PackedScene" id=21]
+[ext_resource path="res://Floortiles/danger_floor.png" type="Texture" id=22]
+[ext_resource path="res://attack_tutorial_manager.tscn" type="PackedScene" id=23]
+[ext_resource path="res://box.png" type="Texture" id=26]
+[ext_resource path="res://Main Menu/back_to_menu.png" type="Texture" id=28]
+[ext_resource path="res://chained_billboard.png" type="Texture" id=37]
+
+[sub_resource type="TileSet" id=1]
+0/name = "floor.png 0"
+0/texture = ExtResource( 7 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 256, 150 )
+0/tile_mode = 0
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape_one_way = false
+0/shape_one_way_margin = 0.0
+0/shapes = [  ]
+0/z_index = 0
+
+[sub_resource type="DynamicFont" id=2]
+size = 128
+extra_spacing_top = -32
+font_data = ExtResource( 11 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 96
+extra_spacing_top = -32
+font_data = ExtResource( 11 )
+
+[node name="Main" type="Node"]
+
+[node name="background_floor" type="Sprite" parent="."]
+position = Vector2( 0, 570.211 )
+scale = Vector2( 1.75662, 1.75662 )
+texture = ExtResource( 3 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Box" type="Sprite" parent="."]
+position = Vector2( 0, 519.942 )
+scale = Vector2( 1.6, 1.6 )
+texture = ExtResource( 26 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Level1" type="Node2D" parent="." groups=["level"]]
+script = ExtResource( 5 )
+map_info_resource = ExtResource( 8 )
+bomb = ExtResource( 16 )
+water_bomb = ExtResource( 21 )
+pulling_rod = ExtResource( 19 )
+pushing_rod = ExtResource( 20 )
+
+[node name="Floor" parent="Level1" instance=ExtResource( 1 )]
+z_index = 0
+tile_set = SubResource( 1 )
+tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 65536, 0, 0, 65537, 0, 0, 65538, 0, 0, 65539, 0, 0, 65540, 0, 0, 65541, 0, 0, 65542, 0, 0, 65543, 0, 0, 131072, 0, 0, 131073, 0, 0, 131074, 0, 0, 131075, 0, 0, 131076, 0, 0, 131077, 0, 0, 131078, 0, 0, 131079, 0, 0, 196608, 0, 0, 196609, 0, 0, 196610, 0, 0, 196611, 0, 0, 196612, 0, 0, 196613, 0, 0, 196614, 0, 0, 196615, 0, 0, 262144, 0, 0, 262145, 0, 0, 262146, 0, 0, 262147, 0, 0, 262148, 0, 0, 262149, 0, 0, 262150, 0, 0, 262151, 0, 0, 327680, 0, 0, 327681, 0, 0, 327682, 0, 0, 327683, 0, 0, 327684, 0, 0, 327685, 0, 0, 327686, 0, 0, 327687, 0, 0, 393216, 0, 0, 393217, 0, 0, 393218, 0, 0, 393219, 0, 0, 393220, 0, 0, 393221, 0, 0, 393222, 0, 0, 393223, 0, 0, 458752, 0, 0, 458753, 0, 0, 458754, 0, 0, 458755, 0, 0, 458756, 0, 0, 458757, 0, 0, 458758, 0, 0, 458759, 0, 0 )
+player = ExtResource( 9 )
+melee_enemy = ExtResource( 17 )
+ranged_enemy = ExtResource( 10 )
+ranged_projectile = ExtResource( 18 )
+map_info_resource = ExtResource( 8 )
+
+[node name="Camera2D" type="Camera2D" parent="Level1"]
+offset = Vector2( 0, 512 )
+current = true
+zoom = Vector2( 2, 2 )
+
+[node name="Houses" parent="Level1" groups=["Houses"] instance=ExtResource( 2 )]
+tile_data = PoolIntArray( 0, 3, 0, 3, 3, 0, 4, 1, 0, 6, 3, 0, 7, 3, 0, 65536, 0, 0, 131072, 2, 0, 131074, 0, 0, 196608, 3, 0, 196614, 3, 0, 196615, 3, 0, 262144, 3, 0, 262148, 0, 0, 262150, 3, 0, 262151, 3, 0, 327680, 1, 0, 393216, 2, 0, 458752, 3, 0, 458755, 3, 0, 458758, 3, 0, 458759, 3, 0 )
+initial_map_info = ExtResource( 8 )
+danger_tiles = ExtResource( 22 )
+
+[node name="Health" parent="Level1" instance=ExtResource( 6 )]
+position = Vector2( -980.829, -276.858 )
+map_info = ExtResource( 8 )
+
+[node name="Abilities" parent="Level1" instance=ExtResource( 4 )]
+
+[node name="Attack" type="TextureButton" parent="Level1"]
+margin_left = -1314.72
+margin_top = 919.738
+margin_right = -814.72
+margin_bottom = 1119.74
+texture_normal = ExtResource( 12 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="attack text" type="Label" parent="Level1/Attack"]
+margin_left = 40.0
+margin_right = 472.0
+margin_bottom = 167.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 2 )
+text = "Attack"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="End_Turn" type="TextureButton" parent="Level1"]
+margin_left = 524.102
+margin_top = 919.738
+margin_right = 1024.1
+margin_bottom = 1119.74
+disabled = true
+texture_normal = ExtResource( 13 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="end turn text" type="Label" parent="Level1/End_Turn"]
+margin_left = 130.813
+margin_right = 390.813
+margin_bottom = 167.001
+grow_horizontal = 2
+grow_vertical = 2
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 2 )
+text = "End turn"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Turn_counter" type="TextureRect" parent="Level1"]
+margin_left = 291.005
+margin_top = -276.858
+margin_right = 991.005
+margin_bottom = -76.8575
+texture = ExtResource( 15 )
+script = ExtResource( 14 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Counter" type="Label" parent="Level1/Turn_counter"]
+margin_left = 33.0
+margin_top = 29.0
+margin_right = 670.0
+margin_bottom = 186.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 3 )
+text = "ROUND_COUNT
+"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton" type="TextureButton" parent="Level1"]
+margin_left = 1144.01
+margin_top = -276.858
+margin_right = 1485.01
+margin_bottom = 64.1421
+rect_scale = Vector2( 0.5, 0.5 )
+texture_normal = ExtResource( 28 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="chained_billboard" type="Sprite" parent="Level1"]
+position = Vector2( -25, -600 )
+texture = ExtResource( 37 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="billboard text" type="Label" parent="Level1/chained_billboard"]
+margin_left = -320.101
+margin_top = 33.9795
+margin_right = 316.899
+margin_bottom = 190.979
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 3 )
+text = "Choose spawning
+locations
+"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tween" type="Tween" parent="Level1"]
+
+[node name="Attack_tutorials" parent="Level1" instance=ExtResource( 23 )]
+
+[connection signal="ability_done" from="Level1" to="Level1/Abilities" method="_on_Level1_ability_done"]
+[connection signal="new_map" from="Level1" to="Level1/Houses" method="_on_Level1_new_map"]
+[connection signal="remove_attack" from="Level1" to="Level1/Abilities" method="_on_Level1_remove_attack"]
+[connection signal="reset_attacks" from="Level1" to="Level1/Abilities" method="_on_Level1_reset_attacks"]
+[connection signal="update_turn" from="Level1" to="Level1/Turn_counter" method="_on_Level1_update_turn"]
+[connection signal="character_died" from="Level1/Floor" to="Level1/Houses" method="_on_Floor_character_died"]
+[connection signal="state_changed" from="Level1/Floor" to="Level1" method="_on_Floor_state_changed"]
+[connection signal="update_danger_tiles" from="Level1/Floor" to="Level1/Houses" method="_on_Floor_update_danger_tiles"]
+[connection signal="activate_ability" from="Level1/Abilities" to="Level1/Attack_tutorials" method="_on_Abilities_activate_ability"]
+[connection signal="button_up" from="Level1/Attack" to="Level1" method="_on_Attack_button_up"]
+[connection signal="button_up" from="Level1/End_Turn" to="Level1" method="_on_End_Turn_button_up"]

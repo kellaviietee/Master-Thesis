@@ -1,0 +1,111 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Scenes/Floor.tscn" type="PackedScene" id=1]
+[ext_resource path="res://healthbar.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Projectiles/water_ammo.png" type="Texture" id=3]
+[ext_resource path="res://Enemy graphics/Enemy3.png" type="Texture" id=4]
+[ext_resource path="res://Player graphics/Player1.png" type="Texture" id=5]
+[ext_resource path="res://Tutorials/water_bomb_tutorial.gd" type="Script" id=6]
+
+[sub_resource type="Animation" id=1]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("WaterAmmo:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( -184.594, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath("WaterAmmo:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( -153.723, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Enemy3/healthbar:value")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 2.0 ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "water_bomb"
+length = 2.0
+loop = true
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("WaterAmmo:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( -184.594, -0.25, 0, 0.25, 0, 39.5584, -0.1, -81.0423, 0.1, 85.9977, 263.711, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.5, 1 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath("WaterAmmo:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( -153.723, -0.25, 0, 0.25, 0, -238.576, -0.25, 0, 0.25, 0, -85.8406, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.5, 1 )
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Enemy3/healthbar:value")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.9, 1, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 3.0, 3.0, 1.0, 1.0 ]
+}
+
+[node name="water_bomb_tutorial" type="Node2D"]
+script = ExtResource( 6 )
+
+[node name="Floor" parent="." instance=ExtResource( 1 )]
+tile_data = PoolIntArray( -65538, 0, 0, -65537, 0, 0, -131072, 0, 0, -2, 0, 0, -1, 0, 0, -65536, 0, 0, 65534, 0, 0, 65535, 0, 0, 0, 0, 0 )
+script = null
+
+[node name="Player1" type="Sprite" parent="."]
+position = Vector2( -251.063, -115.539 )
+z_index = 1
+texture = ExtResource( 5 )
+
+[node name="WaterAmmo" type="Sprite" parent="."]
+position = Vector2( -184.594, -153.723 )
+scale = Vector2( 0.3, 0.3 )
+z_index = 1
+texture = ExtResource( 3 )
+
+[node name="Enemy3" type="Sprite" parent="."]
+position = Vector2( 273.611, -92.9117 )
+scale = Vector2( 1.5, 1.5 )
+z_index = 1
+texture = ExtResource( 4 )
+
+[node name="healthbar" parent="Enemy3" instance=ExtResource( 2 )]
+value = 2.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 1 )
+anims/water_bomb = SubResource( 2 )

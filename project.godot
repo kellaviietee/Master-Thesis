@@ -1,0 +1,97 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "KinematicBody2D",
+"class": "Characters",
+"language": "GDScript",
+"path": "res://Scenes/Characters.gd"
+}, {
+"base": "Path2D",
+"class": "bomb",
+"language": "GDScript",
+"path": "res://Scenes/Bomb.gd"
+}, {
+"base": "TileMap",
+"class": "characters_map",
+"language": "GDScript",
+"path": "res://Scripts/Floor.gd"
+}, {
+"base": "Characters",
+"class": "melee_enemy",
+"language": "GDScript",
+"path": "res://Scenes/melee_enemy.gd"
+}, {
+"base": "Characters",
+"class": "player_character",
+"language": "GDScript",
+"path": "res://Scenes/player_character.gd"
+}, {
+"base": "Node2D",
+"class": "pulling_rod",
+"language": "GDScript",
+"path": "res://Scenes/pulling_rod.gd"
+}, {
+"base": "Node2D",
+"class": "pushing_rod",
+"language": "GDScript",
+"path": "res://Scenes/pushing_rod.gd"
+}, {
+"base": "Characters",
+"class": "ranged_enemy",
+"language": "GDScript",
+"path": "res://Scenes/ranged_enemy.gd"
+}, {
+"base": "Area2D",
+"class": "ranged_projectile",
+"language": "GDScript",
+"path": "res://Scenes/ranged_projectile.gd"
+} ]
+_global_script_class_icons={
+"Characters": "",
+"bomb": "",
+"characters_map": "",
+"melee_enemy": "",
+"player_character": "",
+"pulling_rod": "",
+"pushing_rod": "",
+"ranged_enemy": "",
+"ranged_projectile": ""
+}
+
+[application]
+
+config/name="Master Thesis"
+run/main_scene="res://Scenes/Main.tscn"
+config/icon="res://icon.png"
+
+[autoload]
+
+Global="*res://Scripts/Global.gd"
+
+[input]
+
+click={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+
+[locale]
+
+translations=PoolStringArray( "res://Testing.en.translation", "res://Testing.et.translation" )
+locale_filter=[ 1, [ "en", "et" ] ]
+
+[rendering]
+
+quality/driver/driver_name="GLES2"
+vram_compression/import_etc=true
+vram_compression/import_etc2=false
+environment/default_environment="res://default_env.tres"

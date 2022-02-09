@@ -1,0 +1,120 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Main Menu/Fight for the little man.png" type="Texture" id=1]
+[ext_resource path="res://Main Menu/About.png" type="Texture" id=2]
+[ext_resource path="res://Main Menu/Exit Game.png" type="Texture" id=3]
+[ext_resource path="res://Main Menu/New Game.png" type="Texture" id=4]
+[ext_resource path="res://Scripts/Main Menu.gd" type="Script" id=5]
+[ext_resource path="res://Main Menu/Estonian.png" type="Texture" id=6]
+[ext_resource path="res://Main Menu/English.png" type="Texture" id=7]
+[ext_resource path="res://font_style.tres" type="DynamicFont" id=8]
+
+[node name="Main Menu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 1 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 960, 540 )
+current = true
+zoom = Vector2( 1.2, 1.2 )
+
+[node name="New Game" type="TextureButton" parent="."]
+margin_left = 97.9758
+margin_top = 280.676
+margin_right = 797.976
+margin_bottom = 480.676
+texture_normal = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="New_game_text" type="Label" parent="New Game"]
+margin_left = 82.5373
+margin_top = -35.2778
+margin_right = 668.537
+margin_bottom = 179.723
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 8 )
+text = "New Game"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="About" type="TextureButton" parent="."]
+margin_left = 97.9758
+margin_top = 480.676
+margin_right = 797.976
+margin_bottom = 680.676
+texture_normal = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="About_text" type="Label" parent="About"]
+margin_left = 110.539
+margin_top = -47.8771
+margin_right = 626.539
+margin_bottom = 167.123
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 8 )
+text = "About"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Exit Game" type="TextureButton" parent="."]
+margin_left = 97.9758
+margin_top = 680.676
+margin_right = 797.976
+margin_bottom = 880.676
+texture_normal = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Exit_text" type="Label" parent="Exit Game"]
+margin_left = 82.5373
+margin_top = -32.8766
+margin_right = 646.537
+margin_bottom = 182.124
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 8 )
+text = "Exit Game"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="English" type="TextureButton" parent="."]
+margin_left = 1400.89
+margin_top = 818.175
+margin_right = 1621.89
+margin_bottom = 1012.17
+texture_normal = ExtResource( 7 )
+
+[node name="Estonian" type="TextureButton" parent="."]
+margin_left = 1621.89
+margin_top = 818.175
+margin_right = 1842.89
+margin_bottom = 1012.17
+texture_normal = ExtResource( 6 )
+
+[connection signal="button_up" from="New Game" to="." method="_on_New_Game_button_up"]
+[connection signal="button_up" from="About" to="." method="_on_About_button_up"]
+[connection signal="button_up" from="Exit Game" to="." method="_on_Exit_Game_button_up"]
+[connection signal="button_up" from="English" to="." method="_on_English_button_up"]
+[connection signal="button_up" from="Estonian" to="." method="_on_Estonian_button_up"]

@@ -1,0 +1,92 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Scenes/Floor.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Enemy graphics/Enemy3.png" type="Texture" id=2]
+[ext_resource path="res://Player graphics/Player1.png" type="Texture" id=3]
+[ext_resource path="res://Projectiles/item_rod.png" type="Texture" id=4]
+[ext_resource path="res://Tutorials/pulling_tutorial.gd" type="Script" id=5]
+
+[sub_resource type="Animation" id=1]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("ItemRod:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 111.981, -29.1528 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Enemy3:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 21.5432, -94.8706 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "pulling"
+length = 3.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("ItemRod:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 2, 3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0.258255, -95.6208 ), Vector2( 111.981, -29.1528 ), Vector2( 0.258255, -95.6208 ), Vector2( 0.258255, -95.6208 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Enemy3:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1, 2, 3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 140.337, -35.4737 ), Vector2( 140.337, -35.4737 ), Vector2( 21.5432, -94.8706 ), Vector2( 21.5432, -94.8706 ) ]
+}
+
+[node name="pulling_tutorial" type="Node2D"]
+script = ExtResource( 5 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 1 )
+anims/pulling = SubResource( 2 )
+
+[node name="Floor" parent="." instance=ExtResource( 1 )]
+tile_data = PoolIntArray( -65538, 0, 0, -65537, 0, 0, -131072, 0, 0, -2, 0, 0, -1, 0, 0, -65536, 0, 0, 65534, 0, 0, 65535, 0, 0, 0, 0, 0 )
+script = null
+
+[node name="Player1" type="Sprite" parent="."]
+position = Vector2( -118.876, -181.349 )
+z_index = 1
+texture = ExtResource( 3 )
+
+[node name="ItemRod" type="Sprite" parent="."]
+position = Vector2( 111.981, -29.1528 )
+rotation = 2.17548
+scale = Vector2( 1.125, 1.125 )
+z_index = 1
+texture = ExtResource( 4 )
+
+[node name="Enemy3" type="Sprite" parent="."]
+position = Vector2( 21.5432, -94.8706 )
+scale = Vector2( 1.5, 1.5 )
+z_index = 1
+texture = ExtResource( 2 )

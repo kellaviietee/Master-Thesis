@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://particle.png" type="Texture" id=1]
+
+[node name="available_spawning_loc" type="CPUParticles2D" groups=[
+"Spawning_loc",
+]]
+position = Vector2( 138.138, 253.422 )
+amount = 60
+texture = ExtResource( 1 )
+emission_shape = 2
+emission_rect_extents = Vector2( 64, 32 )
+gravity = Vector2( 0, -98 )
+linear_accel = 5.0
+radial_accel = 10.0
+scale_amount = 0.2

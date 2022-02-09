@@ -1,0 +1,117 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Scenes/Floor.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Player graphics/Player1.png" type="Texture" id=2]
+[ext_resource path="res://Enemy graphics/Enemy3.png" type="Texture" id=3]
+[ext_resource path="res://Projectiles/pusher.png" type="Texture" id=4]
+[ext_resource path="res://Tutorials/pushing_tutorial.gd" type="Script" id=5]
+
+[sub_resource type="Animation" id=1]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Pusher:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -4.98938, -61.799 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Enemy3:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 135.018, -155.137 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Pusher:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "push"
+length = 3.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Pusher:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -115.298, -10.8873 ), Vector2( -4.98938, -61.799 ), Vector2( 115.219, -109.882 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Enemy3:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1, 2, 3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 9.15277, -101.397 ), Vector2( 9.15277, -101.397 ), Vector2( 135.018, -155.137 ), Vector2( 135.018, -155.137 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Pusher:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 2, 3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, false ]
+}
+
+[node name="pushing_tutorial" type="Node2D"]
+script = ExtResource( 5 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 1 )
+anims/push = SubResource( 2 )
+
+[node name="Floor" parent="." instance=ExtResource( 1 )]
+tile_data = PoolIntArray( -65538, 0, 0, -65537, 0, 0, -131072, 0, 0, -2, 0, 0, -1, 0, 0, -65536, 0, 0, 65534, 0, 0, 65535, 0, 0, 0, 0, 0, 131070, 0, 0, 131071, 0, 0, 65536, 0, 0 )
+script = null
+
+[node name="Player1" type="Sprite" parent="."]
+position = Vector2( -246.82, 13.1543 )
+z_index = 1
+texture = ExtResource( 2 )
+
+[node name="Pusher" type="Sprite" parent="."]
+visible = false
+position = Vector2( -4.98938, -61.799 )
+rotation = 0.953583
+scale = Vector2( 1.5, 1.5 )
+z_index = 1
+texture = ExtResource( 4 )
+
+[node name="Enemy3" type="Sprite" parent="."]
+position = Vector2( 135.018, -155.137 )
+scale = Vector2( 1.5, 1.5 )
+z_index = 1
+texture = ExtResource( 3 )
