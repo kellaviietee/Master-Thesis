@@ -151,3 +151,16 @@ func is_location_a_building(test_location:Vector2) -> bool:
 	
 func building_got_damaged():
 	emit_signal("update_building_health",1)
+
+func occupied_locations()->Array:
+	var occupied_location = []
+	occupied_location.append_array(player_locations.values())
+	occupied_location.append_array(enemy_locations.values())
+	return occupied_location
+
+func reset_all_info():
+	map_info.clear()
+	walkable_tiles.clear()
+	player_locations.clear()
+	enemy_locations.clear()
+	mountain_locations.clear()

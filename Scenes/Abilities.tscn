@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=39 format=2]
 
 [ext_resource path="res://Lemons Can Fly.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Scripts/Coordinates.gd" type="Script" id=2]
@@ -25,6 +25,10 @@
 [ext_resource path="res://Tutorials/tutorial text box.png" type="Texture" id=23]
 [ext_resource path="res://Scenes/vector length.gd" type="Script" id=24]
 [ext_resource path="res://Tutorials/vektori pikkus.png" type="Texture" id=25]
+[ext_resource path="res://Player graphics/Player1.png" type="Texture" id=26]
+[ext_resource path="res://Resources/map_info.tres" type="Resource" id=27]
+[ext_resource path="res://Player graphics/Player2.png" type="Texture" id=28]
+[ext_resource path="res://Enemy graphics/Enemy1.png" type="Texture" id=29]
 
 [sub_resource type="DynamicFont" id=2]
 size = 140
@@ -36,6 +40,14 @@ extents = Vector2( 75.5486, 57.4386 )
 [sub_resource type="StyleBoxEmpty" id=4]
 
 [sub_resource type="StyleBoxEmpty" id=5]
+
+[sub_resource type="SpriteFrames" id=10]
+animations = [ {
+"frames": [ ExtResource( 26 ), ExtResource( 29 ), ExtResource( 28 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
 
 [sub_resource type="StyleBoxEmpty" id=6]
 
@@ -56,6 +68,7 @@ animations = [ {
 
 [node name="Abilities" type="Node2D"]
 script = ExtResource( 3 )
+map_info = ExtResource( 27 )
 
 [node name="Nerfgun" type="TextureButton" parent="." groups=["Ability_buttons"]]
 margin_left = -858.702
@@ -196,10 +209,10 @@ position = Vector2( -153.502, -96.8699 )
 shape = SubResource( 3 )
 
 [node name="Target" type="Label" parent="Magnitude/answer_box"]
-margin_left = -596.308
-margin_top = -151.291
-margin_right = -374.308
-margin_bottom = -69.2913
+margin_left = -498.616
+margin_top = -146.592
+margin_right = -331.616
+margin_bottom = -64.5916
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 16 )
@@ -227,6 +240,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Player1" type="AnimatedSprite" parent="Magnitude"]
+position = Vector2( -271.225, -6.10352e-05 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 10 )
+
 [node name="Vector addition" type="Sprite" parent="." groups=["targeting_system"]]
 position = Vector2( -2100, 770 )
 texture = ExtResource( 11 )
@@ -235,9 +253,9 @@ __meta__ = {
 }
 
 [node name="Target" type="Label" parent="Vector addition"]
-margin_left = 148.234
+margin_left = -307.335
 margin_top = -41.8231
-margin_right = 299.234
+margin_right = -156.335
 margin_bottom = 40.1769
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
@@ -265,9 +283,9 @@ __meta__ = {
 }
 
 [node name="answer_x" type="LineEdit" parent="Vector addition"]
-margin_left = -431.568
+margin_left = 51.5474
 margin_top = -41.71
-margin_right = -263.568
+margin_right = 219.547
 margin_bottom = 40.29
 focus_mode = 1
 custom_colors/font_color = Color( 0, 0, 0, 1 )
@@ -282,9 +300,9 @@ __meta__ = {
 }
 
 [node name="answer_y" type="LineEdit" parent="Vector addition"]
-margin_left = -219.406
+margin_left = 270.066
 margin_top = -41.8231
-margin_right = -51.4055
+margin_right = 438.067
 margin_bottom = 40.1769
 focus_mode = 1
 custom_colors/font_color = Color( 0, 0, 0, 1 )
@@ -305,9 +323,9 @@ __meta__ = {
 }
 
 [node name="Target" type="Label" parent="Vector subtraction"]
-margin_left = 148.234
+margin_left = -313.692
 margin_top = -41.8231
-margin_right = 299.234
+margin_right = -162.692
 margin_bottom = 40.1769
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
@@ -335,9 +353,9 @@ __meta__ = {
 }
 
 [node name="answer_x" type="LineEdit" parent="Vector subtraction"]
-margin_left = -431.568
+margin_left = 42.1226
 margin_top = -41.71
-margin_right = -263.568
+margin_right = 210.123
 margin_bottom = 40.29
 focus_mode = 1
 custom_colors/font_color = Color( 0, 0, 0, 1 )
@@ -352,9 +370,9 @@ __meta__ = {
 }
 
 [node name="answer_y" type="LineEdit" parent="Vector subtraction"]
-margin_left = -219.406
+margin_left = 257.353
 margin_top = -41.8231
-margin_right = -51.4055
+margin_right = 425.353
 margin_bottom = 40.1769
 focus_mode = 1
 custom_colors/font_color = Color( 0, 0, 0, 1 )
@@ -599,4 +617,8 @@ position = Vector2( 1150, 140 )
 [connection signal="input_event" from="Coordinates/Y_up" to="Coordinates" method="_on_Y_up_input_event"]
 [connection signal="input_event" from="Coordinates/Y_down" to="Coordinates" method="_on_Y_down_input_event"]
 [connection signal="text_changed" from="Magnitude/answer_box/answer" to="." method="_on_answer_text_changed"]
+[connection signal="text_changed" from="Vector addition/answer_x" to="." method="_on_answer_x_text_changed"]
+[connection signal="text_changed" from="Vector addition/answer_y" to="." method="_on_answer_y_text_changed"]
+[connection signal="text_changed" from="Vector subtraction/answer_x" to="." method="_on_answer_x_text_changed"]
+[connection signal="text_changed" from="Vector subtraction/answer_y" to="." method="_on_answer_y_text_changed"]
 [connection signal="text_changed" from="Vector dot product/scalar_product" to="." method="_on_scalar_product_text_changed"]

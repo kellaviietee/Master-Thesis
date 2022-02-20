@@ -17,4 +17,21 @@ LEN_TUT,Vector \n length,Vektori \n pikkus
 ADD_TUT,Vector \n addition,Vektorite \n liitmine
 SUB_TUT,Vector \n subtraction,Vektorite \n lahutamine
 ROUND_COUNT,Round ends in \n %s turns,Raundi lõpuni on \n %s käiku
-BILL1,Choose spawning \n locations,Määra oma \n asukohad
+BILL1,Choose spawning \n locations,Määra tegelaste \n asukohad
+BILL2,Enemy \n movement,Vastaste \n liikumine
+BILL3,Player\n actions,Mängija \n käigud
+BILL4,Enemy\n attacks,Vastaste\n rünnakud
+INTRO,To the game, Mängima
+INSTRUCTION,Game instructions,Mängujuhised
+GAME_GOAL,Game's Goal,Mängueesmärk
+GAME_GOALS, Game's Goal is to defend toys\n for 3 round.\nGame is lost when toys are hit\n7times in total., Eesmärgiks on kaitsta \n oma mänguasju 3 raundi.\n Mäng kaotatakse kui mänguasjad\nkokku saavad pihta\n 7 korda (südamete arv).
+GAME_TURN_DESC,Every round consists of \n 4 turns., Iga raund koosneb\n4 käigust.
+GAME_TURN,Game turn,Mängukäik
+PLAYER_TURN_DESC, On every turn Player can move\n and use an attack\n with each character., Iga raund koosneb\n4 käigust.\nIga käik saab mängija iga\n tegelast ühe korra liigutada ja\n kasutada temaga ühte rünnakut.
+PLAYER_TURN,Player turn,Mängija käik
+CHARACTERS_DESC,At the beginning the characters\n have to be placed on the\n left side of the board.\n Characters can move maximum\n 4 tiles per turn., Mängu algul tuleb tegelased asetada\n mänguplatsi vasakule poolele.\n Tegelased saavad maksimaalselt\n liikuda 4 ruudu kaugusele.\n Igal tegelasel ja viirusel\non 3 elu.
+CHARACTERS,About characters, Tegelased ja viirused
+MAIN_MENU,Main Menu, Peamenüü
+WIN, You won!\nCongratulations!,Sa võitsid!\n Palju õnne!!!
+LOST,You lost.\n Better luck next time., Viirused võitsid.\n Järgmise lahinguni.
+TITLE,Little guy's fight,Väikemehe võitlus

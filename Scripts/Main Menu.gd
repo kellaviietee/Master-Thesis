@@ -1,8 +1,8 @@
 extends Control
 
-onready var new_text = get_node("New Game/New_game_text")
-onready var about_text = get_node("About/About_text")
-onready var exit_text = get_node("Exit Game/Exit_text")
+onready var new_text = get_node("VBoxContainer/New Game/New_game_text")
+onready var exit_text = get_node("VBoxContainer/Exit Game/Exit_text")
+onready var title = get_node("Label")
 
 func _ready():
 	update_texts()
@@ -29,5 +29,6 @@ func _on_Estonian_button_up():
 
 func update_texts():
 	new_text.text = tr("START")
-	about_text.text = tr("INFO")
 	exit_text.text = tr("QUIT")
+	title.text = tr("TITLE")
+	

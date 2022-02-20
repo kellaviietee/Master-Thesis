@@ -8,6 +8,7 @@
 radius = 1.0
 
 [node name="ranged_projectile" type="Area2D"]
+z_index = 1
 script = ExtResource( 11 )
 map_info = ExtResource( 12 )
 

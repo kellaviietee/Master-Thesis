@@ -23,8 +23,8 @@
 [ext_resource path="res://Scenes/water_bomb.tscn" type="PackedScene" id=21]
 [ext_resource path="res://Floortiles/danger_floor.png" type="Texture" id=22]
 [ext_resource path="res://attack_tutorial_manager.tscn" type="PackedScene" id=23]
+[ext_resource path="res://Scenes/chained_billboard.gd" type="Script" id=24]
 [ext_resource path="res://box.png" type="Texture" id=26]
-[ext_resource path="res://Main Menu/back_to_menu.png" type="Texture" id=28]
 [ext_resource path="res://chained_billboard.png" type="Texture" id=37]
 
 [sub_resource type="TileSet" id=1]
@@ -184,20 +184,10 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureButton" type="TextureButton" parent="Level1"]
-margin_left = 1144.01
-margin_top = -276.858
-margin_right = 1485.01
-margin_bottom = 64.1421
-rect_scale = Vector2( 0.5, 0.5 )
-texture_normal = ExtResource( 28 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="chained_billboard" type="Sprite" parent="Level1"]
-position = Vector2( -25, -600 )
+position = Vector2( -25, -298.041 )
 texture = ExtResource( 37 )
+script = ExtResource( 24 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -227,9 +217,12 @@ __meta__ = {
 [connection signal="remove_attack" from="Level1" to="Level1/Abilities" method="_on_Level1_remove_attack"]
 [connection signal="reset_attacks" from="Level1" to="Level1/Abilities" method="_on_Level1_reset_attacks"]
 [connection signal="update_turn" from="Level1" to="Level1/Turn_counter" method="_on_Level1_update_turn"]
+[connection signal="character_changed" from="Level1/Floor" to="Level1/Abilities" method="_on_Floor_character_changed"]
 [connection signal="character_died" from="Level1/Floor" to="Level1/Houses" method="_on_Floor_character_died"]
 [connection signal="state_changed" from="Level1/Floor" to="Level1" method="_on_Floor_state_changed"]
+[connection signal="state_changed" from="Level1/Floor" to="Level1/chained_billboard" method="_on_Floor_state_changed"]
 [connection signal="update_danger_tiles" from="Level1/Floor" to="Level1/Houses" method="_on_Floor_update_danger_tiles"]
+[connection signal="new_round" from="Level1/Houses" to="Level1/Floor" method="_on_Houses_new_round"]
 [connection signal="activate_ability" from="Level1/Abilities" to="Level1/Attack_tutorials" method="_on_Abilities_activate_ability"]
 [connection signal="button_up" from="Level1/Attack" to="Level1" method="_on_Attack_button_up"]
 [connection signal="button_up" from="Level1/End_Turn" to="Level1" method="_on_End_Turn_button_up"]

@@ -18,4 +18,6 @@ func _ready():
 
 func update_health(damage):
 	health -= damage
+	if health <=0:
+		get_tree().change_scene("res://Scenes/Lost Screen.tscn")
 	emit_signal("health_changed",health)

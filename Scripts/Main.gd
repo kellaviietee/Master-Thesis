@@ -26,6 +26,9 @@ func _ready():
 func _on_End_Turn_button_up():
 	#What happens when End Turn is pressed
 	get_node("End_Turn").disabled = true
+	character_map.current_state = character_map.STATES.enemy_attack
+	character_map.emit_signal("state_changed",character_map.current_state)
+	emit_signal("ability_done",2)
 	var all_enemies = get_tree().get_nodes_in_group("enemies")
 	for enemy in all_enemies:
 		if is_instance_valid(enemy):
@@ -47,7 +50,7 @@ func _on_End_Turn_button_up():
 	emit_signal("update_turn",turns_left)
 	character_map.spawn_enemies(2)
 	ability_counter = 0
-	_on_Floor_state_changed(1)
+	character_map.emit_signal("state_changed",1)
 
 
 func _on_Attack_button_up():
@@ -99,6 +102,7 @@ func teleport_player(target:Vector2):
 		player.position = character_map.map_to_world(target) + Vector2(0,32)
 		player.has_attacked = true
 		player.active_player = false
+		map_info_resource.player_locations[player] = target
 	else:
 		player.has_attacked = true
 		player.active_player = false
@@ -106,6 +110,7 @@ func teleport_player(target:Vector2):
 	player.teleport_in()
 	emit_signal("remove_attack",1)
 	yield(player.anim,"animation_finished")
+	
 
 func push_a_character(target_location:Vector2):
 	#Push a character in a target location.
@@ -113,15 +118,20 @@ func push_a_character(target_location:Vector2):
 	if player == null:
 		return
 	player.target = target_location
+	var generated_vector = get_node("Abilities").gen_vec
+	var answer_vector = get_node("Abilities").answer_vec
 	var player_map_position = character_map.world_to_map(player.position)
 	if player_map_position.x == player.target.x or player_map_position.y == player.target.y and not player.has_attacked:
-		var direction:Vector2 = -(player_map_position - player.target).normalized()
-		var new_rod = pushing_rod.instance()
-		new_rod.position = character_map.map_to_world(player_map_position + direction) + Vector2(0,32)
-		new_rod.rotation = character_map.map_to_world(target_location).angle_to_point(player.position)
-		new_rod.direction = direction
-		character_map.add_child(new_rod)
-		new_rod.move_and_check()
+		if(target_location + generated_vector == answer_vector):
+			var direction:Vector2 = -(player_map_position - player.target).normalized()
+			var new_rod = pushing_rod.instance()
+			new_rod.position = character_map.map_to_world(player_map_position + direction) + Vector2(0,32)
+			new_rod.rotation = character_map.map_to_world(target_location).angle_to_point(player.position)
+			new_rod.direction = direction
+			character_map.add_child(new_rod)
+			new_rod.move_and_check()
+		elif(target_location + generated_vector != answer_vector):
+			pass
 		player.has_attacked = true
 		player.active_player = false
 	emit_signal("remove_attack",4)
@@ -132,15 +142,21 @@ func pull_a_character(pulling_from:Vector2):
 	if player == null:
 		return
 	player.target = pulling_from
+	var generated_vector = get_node("Abilities").gen_vec
+	var answer_vector = get_node("Abilities").answer_vec
 	var player_map_position = character_map.world_to_map(player.position)
 	if player_map_position.x == player.target.x or player_map_position.y == player.target.y and not player.has_attacked:
-		var direction:Vector2 = -(player_map_position - player.target).normalized()
-		var new_rod = pulling_rod.instance()
-		new_rod.position = character_map.map_to_world(player_map_position + direction) + Vector2(0,32)
-		new_rod.rotation = character_map.map_to_world(pulling_from).angle_to_point(player.position)
-		new_rod.direction = direction
-		character_map.add_child(new_rod)
-		new_rod.move_and_check()
+		if(pulling_from - generated_vector == answer_vector):
+			print("correct answer")
+			var direction:Vector2 = -(player_map_position - player.target).normalized()
+			var new_rod = pulling_rod.instance()
+			new_rod.position = character_map.map_to_world(player_map_position + direction) + Vector2(0,32)
+			new_rod.rotation = character_map.map_to_world(pulling_from).angle_to_point(player.position)
+			new_rod.direction = direction
+			character_map.add_child(new_rod)
+			new_rod.move_and_check()
+		elif(pulling_from - generated_vector != answer_vector):
+			pass
 		player.has_attacked = true
 		player.active_player = false
 	emit_signal("remove_attack",0)
@@ -181,7 +197,7 @@ func attack_with_a_bomb():
 func _on_Floor_state_changed(new_state):
 	#Change a state of the game
 	match new_state:
-		1:
+		1:	
 			var all_enemies = get_tree().get_nodes_in_group("enemies")
 			for enemy in all_enemies:
 				enemy.find_position()
@@ -190,16 +206,19 @@ func _on_Floor_state_changed(new_state):
 				enemy.move_on_path(enemy_path)
 				yield(enemy,"movement_done")
 			character_map.current_state = character_map.STATES.player_movement
+			character_map.emit_signal("state_changed",character_map.current_state)
 			get_node("End_Turn").disabled = false
 
 func exit_scene():
 	var initial_location:Vector2 = house_map.position
-	var all_characters = get_tree().call_group("character","end_of_round")
+	get_tree().call_group("character","end_of_round")
 	tween.interpolate_property(house_map,"position",position,position + Vector2(0, -1500),2.0,Tween.TRANS_QUART,Tween.EASE_IN)
 	tween.start()
 	yield(tween,"tween_all_completed")
+	map_info_resource.reset_all_info()
 	emit_signal("new_map")
 	tween.interpolate_property(house_map,"position",position,initial_location,2.0,Tween.TRANS_QUART,Tween.EASE_IN)
 	tween.start()
 	yield(tween,"tween_all_completed")
 	character_map.current_state = character_map.STATES.spawning
+	character_map.emit_signal("state_changed",character_map.current_state)

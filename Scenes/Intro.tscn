@@ -1,124 +1,208 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Intro/Background.png" type="Texture" id=1]
-[ext_resource path="res://Intro/Player_back.png" type="Texture" id=2]
-[ext_resource path="res://Intro/Virus.png" type="Texture" id=3]
-[ext_resource path="res://Scenes/Player_speech.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Scenes/Virus_speech.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Scripts/Intro.gd" type="Script" id=6]
-[ext_resource path="res://intro.tres" type="DynamicFont" id=7]
+[ext_resource path="res://background floor.png" type="Texture" id=1]
+[ext_resource path="res://Turncounter.png" type="Texture" id=2]
+[ext_resource path="res://Scenes/Intro.gd" type="Script" id=5]
+[ext_resource path="res://Lemons Can Fly.ttf" type="DynamicFontData" id=6]
 
-[sub_resource type="Animation" id=1]
-resource_name = "Player_entering"
-tracks/0/type = "value"
-tracks/0/path = NodePath("Player_back:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector2( -418.312, 618.188 ), Vector2( 519.338, 618.188 ) ]
+[sub_resource type="DynamicFont" id=1]
+size = 48
+font_data = ExtResource( 6 )
+
+[node name="Intro" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "player_speech"
-length = 4.0
-tracks/0/type = "value"
-tracks/0/path = NodePath("Background/Player_speech:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 1, 3, 4 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 0,
-"values": [ Vector2( 79.158, 911.118 ), Vector2( 79.158, 392.998 ), Vector2( 79.158, 392.998 ), Vector2( 79.158, 755.343 ) ]
-}
-
-[sub_resource type="Animation" id=3]
-tracks/0/type = "value"
-tracks/0/path = NodePath("Virus:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector2( 1847.03, 275.49 ), Vector2( 1070.65, 275.49 ) ]
-}
-
-[sub_resource type="Animation" id=4]
-resource_name = "virus_speech"
-length = 5.0
-tracks/0/type = "value"
-tracks/0/path = NodePath("Background/Virus_speech:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 2, 4, 5 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 0,
-"values": [ Vector2( -110.91, -876.584 ), Vector2( -110.91, -277.19 ), Vector2( -110.91, -277.19 ), Vector2( -110.91, -832.56 ) ]
-}
-
-[node name="Intro" type="Node2D"]
-script = ExtResource( 6 )
-
-[node name="Background" type="Sprite" parent="."]
-position = Vector2( 808.252, 361.164 )
-scale = Vector2( 0.835229, 0.835229 )
+[node name="TextureRect" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
 texture = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
 
-[node name="Player_speech" parent="Background" instance=ExtResource( 4 )]
+[node name="to_game" type="TextureButton" parent="."]
+anchor_left = 0.405656
+anchor_top = 0.85
+anchor_right = 0.405656
+anchor_bottom = 1.0
+margin_right = 200.0
+margin_bottom = 10.0
+rect_min_size = Vector2( 200, 100 )
+texture_normal = ExtResource( 2 )
+expand = true
+stretch_mode = 5
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": true
+}
 
-[node name="player_text" type="Label" parent="Background/Player_speech"]
-margin_left = -69.4341
-margin_top = -77.3121
-margin_right = 210.566
-margin_bottom = 54.6879
+[node name="to_Game_label" type="Label" parent="to_game"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -8.98981
+margin_bottom = -8.98981
+mouse_filter = 1
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = ExtResource( 7 )
-autowrap = true
+custom_fonts/font = SubResource( 1 )
+text = "SOmething"
+align = 1
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Virus_speech" parent="Background" instance=ExtResource( 5 )]
-
-[node name="virus_text" type="Label" parent="Background/Virus_speech"]
-margin_left = -175.0
-margin_top = -83.0
-margin_right = 91.0
-margin_bottom = 87.0
+[node name="game_instructions" type="Label" parent="."]
+anchor_left = 0.405656
+anchor_right = 0.580461
+anchor_bottom = 0.0916666
+margin_bottom = 6.10352e-05
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
-custom_fonts/font = ExtResource( 7 )
-text = "teen su haigeks"
-autowrap = true
+custom_fonts/font = SubResource( 1 )
+text = "Mängujuhised"
+align = 1
+valign = 1
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_use_anchors_": true
 }
 
-[node name="Player_back" type="Sprite" parent="."]
-position = Vector2( -518.837, 618.188 )
-scale = Vector2( 0.5, 0.5 )
-texture = ExtResource( 2 )
+[node name="game_goal" type="Label" parent="."]
+anchor_left = 0.0131539
+anchor_top = 0.0916667
+anchor_right = 0.0258492
+anchor_bottom = 0.0916667
+margin_right = 179.0
+margin_bottom = 55.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "Mängueesmärk"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
-[node name="Virus" type="Sprite" parent="."]
-position = Vector2( 1808.86, 275.49 )
-scale = Vector2( 0.5, 0.5 )
-texture = ExtResource( 3 )
+[node name="player_turn" type="Label" parent="."]
+anchor_left = 0.405656
+anchor_top = 0.0916667
+anchor_right = 0.418351
+anchor_bottom = 0.0916667
+margin_right = 179.0
+margin_bottom = 55.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "Mängija käik"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Player_entering = SubResource( 1 )
-anims/player_speech = SubResource( 2 )
-anims/virus_entering = SubResource( 3 )
-anims/virus_speech = SubResource( 4 )
+[node name="About characters" type="Label" parent="."]
+anchor_left = 0.748752
+anchor_top = 0.0916667
+anchor_right = 0.761448
+anchor_bottom = 0.0916667
+margin_right = 179.0
+margin_bottom = 55.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "Tegelastest"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="game_turns" type="Label" parent="."]
+visible = false
+anchor_left = 0.0131539
+anchor_top = 0.371667
+anchor_right = 0.0258492
+anchor_bottom = 0.371667
+margin_right = 179.0
+margin_bottom = 55.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "Mängu käigud"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="game_goal_desc" type="Label" parent="."]
+anchor_left = 0.0131539
+anchor_top = 0.183333
+anchor_right = 0.164521
+anchor_bottom = 0.28
+margin_right = 179.0
+margin_bottom = 55.0
+custom_fonts/font = SubResource( 1 )
+text = "Eesmärgiks on kaitsta 
+oma mänguasju 3 raundi"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="character_desc" type="Label" parent="."]
+anchor_left = 0.652344
+anchor_top = 0.183333
+anchor_right = 0.803711
+anchor_bottom = 0.28
+margin_right = 179.0
+margin_bottom = 55.0
+custom_fonts/font = SubResource( 1 )
+text = "Mängu algul tuleb tegelased
+asetada \"vasakule\" mängu
+platsi poolele.
+Tegelased saavad liikuda
+maksimaalselt 4 ruudu
+kaugusele."
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="player_turn_desc" type="Label" parent="."]
+anchor_left = 0.326172
+anchor_top = 0.183333
+anchor_right = 0.477539
+anchor_bottom = 0.28
+margin_right = 179.0
+margin_bottom = 55.0
+custom_fonts/font = SubResource( 1 )
+text = "Iga käik saab mängija
+liigutada üht tegelast
+ja kasutada tegelasega
+üht erivõimet"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="game_turns_desc" type="Label" parent="."]
+visible = false
+anchor_left = 0.0131539
+anchor_top = 0.463333
+anchor_right = 0.164521
+anchor_bottom = 0.656667
+margin_right = 179.0
+margin_bottom = 55.0
+custom_fonts/font = SubResource( 1 )
+text = "Iga raund koosneb
+4 käigust, mis jagunevad
+erinevateks faasideks"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[connection signal="button_up" from="to_game" to="." method="_on_to_game_button_up"]

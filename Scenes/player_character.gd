@@ -11,6 +11,9 @@ var player_skin:int = 0 setget set_player_skin
 func set_player_skin(skin_id:int)-> void:
 	$AnimatedSprite.frame = skin_id
 
+func get_player_skin()->int:
+	return $AnimatedSprite.frame
+
 func teleport_out():
 	#Teleport disapear
 	$AnimationPlayer.play("teleport_dissappear")
@@ -23,7 +26,10 @@ func _draw():
 	pass
 
 func _on_healthbar_death():
-	print("character died")
+	map_info.player_locations.erase(self)
+	get_parent().character_death(position)
+	Global.player_character_nr -= 1
+	queue_free()
 
 func set_active_player(new_value):
 	if new_value == false:

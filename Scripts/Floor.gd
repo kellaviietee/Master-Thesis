@@ -5,6 +5,7 @@ signal state_changed
 signal character_finished
 signal update_danger_tiles
 signal character_died
+signal character_changed
 
 enum STATES{spawning, enemy_movement, player_movement, player_attack, enemy_attack, no_click}
 
@@ -22,14 +23,14 @@ onready var houses_node = get_parent().get_node("Houses")
 func _ready():
 	current_state = STATES.spawning
 
-func _input(event):
+func _input(_event):
 	#What happens when a mouse click is done
 	if Input.is_action_just_released("click") and current_state == STATES.spawning:
 		var click_location = check_where_on_map_was_clicked(get_global_mouse_position())
 		if click_location != Vector2(100,100) and not map_info_resource.is_location_in_players(click_location):
 			check_player_spawn(click_location)
 			var player_count = count_player_characters()
-			if player_count == 3:
+			if player_count == Global.player_character_nr:
 				spawn_enemies(3)
 				current_state = STATES.enemy_movement
 				emit_signal("state_changed", STATES.enemy_movement)
@@ -40,7 +41,8 @@ func _input(event):
 			if click_location != Vector2(100,100) and not map_info_resource.is_location_in_enemies(click_location):
 				move_a_player_character(active_player)
 		elif map_info_resource.is_location_in_players(click_location):
-			 map_info_resource.change_active_player(click_location)
+			map_info_resource.change_active_player(click_location)
+			emit_signal("character_changed")
 	else:
 		return
 
@@ -52,6 +54,7 @@ func move_a_player_character(active_player:player_character):
 		active_player.move_on_path(player_path)
 		yield(active_player,"movement_done")
 		active_player.has_moved = true
+		get_tree().call_group("enemies","show_what_it_will_hit")
 
 func  check_where_on_map_was_clicked(click_location: Vector2) -> Vector2:
 	# See if player clicked on a map and return in what cell it was in
@@ -72,6 +75,8 @@ func spawn_character(location:Vector2, character:Characters):
 	if character.is_in_group("player"):
 		character.player_skin = count_player_characters() - 1
 		map_info_resource.player_locations[character] = location
+	elif character.is_in_group("enemies"):
+		character.connect("no_target",self,"enemy_no_target")
 
 func find_character_path(character:Characters, end_pos:Vector2) -> PoolVector2Array:
 	# Finds a path to move from point A to point B
@@ -124,10 +129,14 @@ func add_dangerous_tiles(dangerous_locations:Array):
 	
 
 func remove_dangerous_tiles(dangerous_locations:Array):
+	yield(get_tree(),"idle_frame")
+	danger_tile_locs.clear()
+	emit_signal("update_danger_tiles",danger_tile_locs)
 	for location in dangerous_locations:
 		if danger_tile_locs.has(location):
 			danger_tile_locs.erase(location)
 	emit_signal("update_danger_tiles",danger_tile_locs)
+	get_tree().call_group("enemies","show_what_it_will_hit")
 
 func update_all_characters_info():
 	# Add info where characters are to databases.
@@ -161,3 +170,11 @@ func lower_half_of_map(all_free_locations:Array)->Array:
 
 func character_death(character_position:Vector2):
 	emit_signal("character_died",world_to_map(character_position))
+
+
+func _on_Houses_new_round():
+	current_state = STATES.spawning
+	emit_signal("state_changed",current_state)
+	
+func enemy_no_target():
+	emit_signal("character_finished")

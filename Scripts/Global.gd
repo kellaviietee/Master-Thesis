@@ -1,5 +1,6 @@
 extends Node
 
+var player_character_nr = 3
 var round_number = 1
 var building_health = 7
 var level2 = [-1,-1,-1,-1,-1,-1,-1,-1,0,2,-1,-1,-1,-1,-1,-1,-1,-1,-1,2,3,-1,-1,-1,-1,-1,-1,
@@ -16,6 +17,5 @@ func _ready():
 #func _process(delta):
 #	pass
 func next_round():
-	
 	print("next round has begun")
 

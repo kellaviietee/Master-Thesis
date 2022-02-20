@@ -2,19 +2,22 @@ extends Characters
 class_name ranged_enemy
 var movement_end_pos: Vector2
 var current_dangering_locations:Array = []
+signal no_target
+
 
 func _to_string():
 	return "Ranged enemy at %s" % str(get_parent().world_to_map(position))
 
 func move_on_path(path: PoolVector2Array):
 	#Move along a path
-	get_parent().remove_dangerous_tiles(current_dangering_locations)
 	for step in path:
 		tween.interpolate_property(self, "position", position, step + Vector2(0, 32), 1.0, Tween.TRANS_LINEAR,Tween.EASE_IN)
 		tween.start()
 		yield(tween,"tween_completed")
 	show_what_it_will_hit()
 	get_parent().update_all_characters_info()
+	get_parent().remove_dangerous_tiles(current_dangering_locations)
+	get_tree().call_group("enemies","show_what_it_will_hit")
 	emit_signal("movement_done")
 
 func get_pushed(direction:Vector2):
@@ -29,8 +32,7 @@ func get_pushed(direction:Vector2):
 	elif map_info.is_location_in_enemies(end_location):
 		var other_enemy = map_info.get_enemy_at_location(end_location)
 		take_damage(1)
-		if is_instance_valid(other_enemy):
-			other_enemy.take_damage(1)
+		other_enemy.take_damage(1)
 	elif map_info.walkable_tiles.has(end_location):
 		var movement_path = get_parent().find_character_path(self, end_location)
 		move_on_path(movement_path)
@@ -85,6 +87,7 @@ func _on_healthbar_death():
 	get_parent().character_death(self.position)
 	get_parent().remove_dangerous_tiles(current_dangering_locations)
 	queue_free()
+	
 
 func find_locations_to_shoot_from(shooting_target:Vector2, all_standing_locations:Array)-> Array:
 	var possible_locations = []
@@ -109,7 +112,7 @@ func find_locations_to_shoot_from(shooting_target:Vector2, all_standing_location
 func attack_the_target():
 	#Spawn a projectile that does damage.
 	if target == Vector2():
-		return
+		emit_signal("no_target")
 	get_parent().shoot_ranged_projectile(position,target)
 
 func show_what_it_will_hit():
@@ -122,7 +125,7 @@ func show_what_it_will_hit():
 	var dangerous_tiles = []
 	var test_location:Vector2 = current_map_location + direction
 	dangerous_tiles.append(test_location)
-	while walkable_tiles.has(test_location) and not buildings.has(test_location) and not players_locations.has(test_location) and not enemy_locations.has(test_location):
+	while walkable_tiles.has(test_location) and not buildings.has(test_location) and not players_locations.has(test_location) and not enemy_locations.has(test_location) and test_location.x >= 1 and test_location.y >=1 and test_location.x <= 6 and test_location.y <= 6:
 		test_location += direction
 		dangerous_tiles.append(test_location)
 	current_dangering_locations = dangerous_tiles

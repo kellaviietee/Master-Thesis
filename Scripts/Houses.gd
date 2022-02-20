@@ -1,15 +1,13 @@
 extends TileMap
 
 
-signal new_map_done
-
 var astar = AStar2D.new()
 export(Resource) var initial_map_info
 var walkable_tiles = []
 var dangerous_locs:Array = []
-
 export(Texture) var danger_tiles
 
+signal new_round
 
 func _ready():
 	put_map_info_to_resource()
@@ -40,6 +38,10 @@ func update_astar_map():
 		astar.add_point(convert_vector2_to_id(tile),map_to_world(tile))
 	for tile in walkable_tiles:
 		connect_astar_tiles(tile)
+	var occupied_tiles = initial_map_info.occupied_locations()
+	for tile in occupied_tiles:
+		astar.set_point_disabled(convert_vector2_to_id(tile))
+
 
 func connect_astar_tiles(tile):
 	#Connect all the astar points  to each other.
@@ -97,6 +99,7 @@ func _on_Floor_character_died(death_location:Vector2):
 	#If a character died, release the location for astar pathfinding.
 	var death_location_id = convert_vector2_to_id(death_location)
 	astar.set_point_disabled(death_location_id,false)
+	update_walkable_tiles()
 
 
 func _on_Level1_new_map():
@@ -121,10 +124,12 @@ func _on_Level1_new_map():
 			var building = new_house_locations[id]
 			set_cellv(location,building)
 	elif Global.round_number >= 4:
-		get_tree().change_scene("res://Scenes/Main Menu.tscn")
+		get_tree().change_scene("res://Scenes/Win Screen.tscn")
 		return
 	put_map_info_to_resource()
 	update_walkable_tiles()
+	emit_signal("new_round")
+	
 
 func convert_id_to_vector2(id:int):
 	var y:int = id / 8

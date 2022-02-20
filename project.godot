@@ -69,12 +69,17 @@ _global_script_class_icons={
 [application]
 
 config/name="Master Thesis"
-run/main_scene="res://Scenes/Main.tscn"
+run/main_scene="res://Scenes/Main Menu.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
 Global="*res://Scripts/Global.gd"
+
+[display]
+
+window/size/width=1920
+window/size/height=1080
 
 [input]
 

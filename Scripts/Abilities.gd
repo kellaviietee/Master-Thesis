@@ -6,8 +6,13 @@ onready var tween = get_node("Tween")
 signal activate_ability
 signal random_vector
 signal start_of_round
+
+export(Resource) var map_info
+
 var target = Vector2()
 var gen_vec = Vector2()
+var answer_vec = Vector2()
+
 var magnitude:int
 var scalar_value:int
 onready var buttons = [get_node("Nerfgun"), get_node("Soap"), get_node("Water"),get_node("Vaccine"), get_node("Sleep"), get_node("Stinkbomb")]
@@ -22,13 +27,13 @@ func _input(_event):
 			var player:player_character = get_tree().get_nodes_in_group("player")[0]
 			player.target = target
 			match current_ability:
-				0: vector_addition(target)
+				0: vector_addition()
 				3: get_node("Magnitude/answer_box/Target").text = str(target)
-				4: vector_addition(target)
-				5: vector_addition(target)
+				4: vector_addition()
+				5: vector_addition()
 
 
-func vector_addition(target):
+func vector_addition():
 	match current_ability:
 		4:
 			get_node("Vector addition/Target").text = str(target)
@@ -39,6 +44,7 @@ func vector_addition(target):
 			generator.randomize()
 			var y = generator.randi_range(-7,7)
 			var generated_vector = Vector2(x,y)
+			gen_vec = generated_vector
 			emit_signal("random_vector",generated_vector)
 			get_node("Vector addition/generated_vector").text = str(generated_vector)
 		0:
@@ -50,6 +56,7 @@ func vector_addition(target):
 			generator.randomize()
 			var y = generator.randi_range(-7,7)
 			var generated_vector = Vector2(x,y)
+			gen_vec = generated_vector
 			emit_signal("random_vector",generated_vector)
 			get_node("Vector subtraction/generated_vector").text = str(generated_vector)
 		5:
@@ -66,52 +73,70 @@ func vector_addition(target):
 			get_node("Vector dot product/generated_vector").text = str(generated_vector)
 
 func _on_Stickyhand_button_up():
+	var active_player:player_character =  map_info.get_active_player()
+	if active_player.has_attacked == true:
+		return
 	current_ability = 0
-	change_UI(0)
-	change_tutorial(0)
+	change_UI()
+	change_tutorial()
 	emit_signal("activate_ability",current_ability)
 	pass # Replace with function body.
 
 
 func _on_Stinkbomb_button_up():
 	#Teleporting ability button.
+	var active_player:player_character =  map_info.get_active_player()
+	if active_player.has_attacked == true:
+		return
 	current_ability = 1
-	change_UI(1)
-	change_tutorial(1)
+	change_UI()
+	change_tutorial()
 	emit_signal("activate_ability",current_ability)
 
 
 func _on_Soap_button_up():
+	var active_player:player_character =  map_info.get_active_player()
+	if active_player.has_attacked == true:
+		return
 	current_ability = 2
-	change_UI(2)
-	change_tutorial(2)
+	change_UI()
+	change_tutorial()
 	emit_signal("activate_ability",current_ability)
 	pass # Replace with function body.
 
 
 func _on_Water_button_up():
+	var active_player:player_character =  map_info.get_active_player()
+	if active_player.has_attacked == true:
+		return
 	current_ability = 3
 	emit_signal("activate_ability",current_ability)
-	change_UI(3)
-	change_tutorial(3)
+	change_UI()
+	change_tutorial()
 	pass # Replace with function body.
 
 
 func _on_Vaccine_button_up():
+	var active_player:player_character =  map_info.get_active_player()
+	if active_player.has_attacked == true:
+		return
 	current_ability = 4
 	emit_signal("activate_ability",current_ability)
-	change_UI(4)
-	change_tutorial(4)
+	change_UI()
+	change_tutorial()
 	pass # Replace with function body.
 
 func _on_Sleep_button_up():
+	var active_player:player_character =  map_info.get_active_player()
+	if active_player.has_attacked == true:
+		return
 	current_ability = 5
 	emit_signal("activate_ability",current_ability)
-	change_UI(5)
-	change_tutorial(5)
+	change_UI()
+	change_tutorial()
 	pass
 
-func change_UI(current_ability):
+func change_UI():
 	var current_targeting_system 
 	for targeting_system in get_tree().get_nodes_in_group("targeting_system"):
 		if targeting_system.position == Vector2(-1100,770):
@@ -145,7 +170,7 @@ func change_UI(current_ability):
 	yield(tween,"tween_all_completed")
 	get_tree().set_group("Ability_buttons","disabled",false)
 
-func change_tutorial(current_ability):
+func change_tutorial():
 	var current_tutorial 
 	for tutorial in get_tree().get_nodes_in_group("Tutorial"):
 		if tutorial.position == Vector2(1150,140):
@@ -230,9 +255,10 @@ func _on_Level1_reset_attacks():
 func _on_Level1_ability_done(ability_counter:int):
 	current_ability = 6
 	target = Vector2()
-	change_UI(6)
-	change_tutorial(6)
-	if ability_counter >= 2:
+	change_UI()
+	change_tutorial()
+	emit_signal("activate_ability",6)
+	if ability_counter >= Global.player_character_nr - 1:
 		for button in buttons:
 			button.button_mask = false
 	reset_coordinates()
@@ -240,6 +266,7 @@ func _on_Level1_ability_done(ability_counter:int):
 	reset_vector_addition()
 	reset_vector_dot_product()
 	reset_vector_substraction()
+	answer_vec = Vector2()
 
 
 func reset_vector_substraction():
@@ -255,12 +282,19 @@ func reset_coordinates():
 	target = Vector2()
 	get_node("Coordinates/Xcoord").text = "0"
 	get_node("Coordinates/Ycoord").text = "0"
+	get_node("Coordinates").starting_x = 0;
+	get_node("Coordinates").starting_y = 0;
+	
 
 func reset_magnitude():
 	#Reset the values to defaut
 	target = Vector2()
 	get_node("Magnitude/answer_box/Target").text = ""
 	get_node("Magnitude/answer_box/answer").text = ""
+	var player:player_character = map_info.get_active_player()
+	if is_instance_valid(player):
+		var sprite_nr:int = player.get_player_skin()
+		get_node("Magnitude/Player1").frame = sprite_nr
 
 func reset_vector_addition():
 	#Reset the values to defaut
@@ -276,3 +310,19 @@ func reset_vector_dot_product():
 	get_node("Vector dot product/Target").text = ""
 	get_node("Vector dot product/generated_vector").text = ""
 	get_node("Vector dot product/scalar_product").text = ""
+
+
+func _on_answer_x_text_changed(new_text):
+	answer_vec.x = int(new_text)
+
+
+func _on_answer_y_text_changed(new_text):
+	answer_vec.y = int(new_text)
+
+
+func _on_Floor_character_changed():
+	current_ability = 6
+	change_UI()
+	change_tutorial()
+	emit_signal("activate_ability",current_ability)
+
